@@ -82,10 +82,11 @@ dependencies {
     implementation ("androidx.room:room-ktx:$room_version")
     implementation ("androidx.compose.ui:ui:1.0.5")
     // Compose dependencies
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation ("androidx.compose.material:material-icons-extended:1.0.2")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+
 
     // system UI Controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")

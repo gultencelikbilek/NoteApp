@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -19,18 +17,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.noteapp.domain.model.Note
 
 @Composable
 fun NoteScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    addNoteViewModel: AddNoteViewModel = viewModel()
 ) {
+
+   // val addNoteViewModel : AddNoteViewModel = hiltViewModel()
+
     var title by remember {
         mutableStateOf("")
     }
@@ -103,8 +107,10 @@ fun NoteScreen(
         Button(
             modifier = Modifier.padding(20.dp),
             onClick = {
-            navController.navigate("note_list_screen")
-        }) {
+                val note = Note(0,title,content)
+                addNoteViewModel.addNote(note)
+                navController.navigate("note_list_screen")
+            }) {
             Text(text = "Add Note")
         }
     }
