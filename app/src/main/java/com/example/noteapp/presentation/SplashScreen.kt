@@ -9,12 +9,15 @@ import com.example.noteapp.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
+fun SplashScreen(
+    navController: NavHostController
+) {
 
     LaunchedEffect(key1 = true ){
         delay(3000)
         navController.navigate("note_screen")
     }
+
 
     Image(painter = painterResource(id = R.drawable.note_app), contentDescription = "")
 }

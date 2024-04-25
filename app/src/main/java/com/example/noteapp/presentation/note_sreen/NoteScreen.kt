@@ -30,7 +30,7 @@ import com.example.noteapp.domain.model.Note
 @Composable
 fun NoteScreen(
     navController: NavHostController,
-    addNoteViewModel: AddNoteViewModel = viewModel()
+    addNoteViewModel: AddNoteViewModel = hiltViewModel()
 ) {
 
    // val addNoteViewModel : AddNoteViewModel = hiltViewModel()
