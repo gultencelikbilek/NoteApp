@@ -1,5 +1,6 @@
 package com.example.noteapp.presentation.note_sreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,8 +33,6 @@ fun NoteScreen(
     navController: NavHostController,
     addNoteViewModel: AddNoteViewModel = hiltViewModel()
 ) {
-
-   // val addNoteViewModel : AddNoteViewModel = hiltViewModel()
 
     var title by remember {
         mutableStateOf("")
@@ -107,8 +106,9 @@ fun NoteScreen(
         Button(
             modifier = Modifier.padding(20.dp),
             onClick = {
-                val note = Note(0,title,content)
+                val note = Note(0, title, content)
                 addNoteViewModel.addNote(note)
+                Log.d("note:",note.toString())
                 navController.navigate("note_list_screen")
             }) {
             Text(text = "Add Note")

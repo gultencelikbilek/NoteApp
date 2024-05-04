@@ -12,12 +12,9 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navController: NavHostController
 ) {
-
-    LaunchedEffect(key1 = true ){
+    LaunchedEffect(key1 = true) {
         delay(3000)
-        navController.navigate("note_screen")
+        navController.navigate("note_list_screen")
     }
-
-
     Image(painter = painterResource(id = R.drawable.note_app), contentDescription = "")
 }

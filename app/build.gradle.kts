@@ -70,8 +70,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //Hilt
-    implementation ("com.google.dagger:hilt-android:2.44")
-    kapt ("com.google.dagger:hilt-compiler:2.44")
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt ("com.google.dagger:hilt-compiler:2.48")
 
     //room
     val room_version = "2.6.1"
@@ -80,12 +80,12 @@ dependencies {
     annotationProcessor ("androidx.room:room-compiler:$room_version")
     kapt ("androidx.room:room-compiler:$room_version")
     implementation ("androidx.room:room-ktx:$room_version")
-    implementation ("androidx.compose.ui:ui:1.0.5")
+    implementation ("androidx.compose.ui:ui:1.6.6")
     // Compose dependencies
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation ("androidx.compose.material:material-icons-extended:1.0.2")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+    implementation ("androidx.compose.material:material-icons-extended:1.6.6")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation ("com.airbnb.android:lottie:3.4.0")
 
