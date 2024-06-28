@@ -13,6 +13,7 @@ class AllNoteListUseCase @Inject constructor(private val repositoryImpl: NoteRep
     operator suspend fun invoke() : Flow<List<Note>> = flow{
         try {
             emit(repositoryImpl.allNote())//emit() ile paylaşım yaparım
+            Log.d("allnoteusecase:",repositoryImpl.allNote().toString())
         }catch (e:Exception){
             Log.d("allnoteusecase:",e.message.toString())
     }

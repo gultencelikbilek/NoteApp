@@ -6,6 +6,8 @@ import com.example.noteapp.domain.model.Note
 import com.example.noteapp.domain.repository.NoteRepository
 import com.example.noteapp.presentation.DatabaseResult
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class NoteRepositoryImpl @Inject constructor(@ApplicationContext  val app: Context) :NoteRepository {
@@ -14,6 +16,8 @@ class NoteRepositoryImpl @Inject constructor(@ApplicationContext  val app: Conte
     }
 
      override suspend fun allNote(): List<Note> {
-         return AppModule.provideRoom(app).noteDao().allNote()
+         return withContext(Dispatchers.IO) {
+             AppModule.provideRoom(app).noteDao().allNote()
+         }
      }
 }

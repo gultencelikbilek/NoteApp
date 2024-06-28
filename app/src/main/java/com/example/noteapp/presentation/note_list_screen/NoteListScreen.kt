@@ -3,7 +3,10 @@ package com.example.noteapp.presentation.note_list_screen
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,7 +17,9 @@ import androidx.compose.material.icons.filled.Adb
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,14 +39,14 @@ fun NoteListScreen(
     navController: NavController,
     noteViewModel : NoteListViewModel = hiltViewModel()
 ) {
-    var noteList by remember {
-        mutableStateOf(listOf<Note>())
-    }
+    val noteListState = noteViewModel.noteResponse
 
-    noteList = noteViewModel.noteResponse.value.data
+    val noteList = noteListState.value.data.collectAsState(initial = emptyList())
+
     LaunchedEffect(key1 = Unit) {
-      noteViewModel.getAllNotes()
-        Log.d("noteviewmodellist:",noteViewModel.getAllNotes().toString())
+        noteViewModel.getAllNotes()
+        Log.d("notelistviewmodel:", noteViewModel.getAllNotes().toString())
+
     }
 
     Scaffold(
@@ -49,35 +54,30 @@ fun NoteListScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate("note_screen")
-            },
-                content = {
-                          Image(imageVector = Icons.Filled.Add, contentDescription ="" )
-                },
-                shape = RoundedCornerShape(20.dp),
-                containerColor = Purple80,
-                contentColor = Color.White
-            )
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
+            }
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            items(noteList){
-                NoteListCard(noteData = noteViewModel.noteResponse.value.data, itemIndex = it.id)
-                Log.d(  "sdad",noteList.toString())
+            items(noteList.value) { note ->
+                NoteListCard(note = note)
             }
         }
     }
 }
-
 @Composable
-fun NoteListCard(noteData: List<Note>?,itemIndex: Int) {
-    Column {
-     Card(
-         modifier = Modifier.wrapContentSize()
-     ) {
-         Text(text = noteData!![itemIndex].noteTitle)
-         Text(text = noteData[itemIndex].noteContent)
-     }
+fun NoteListCard(note: Note) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = note.noteTitle, style = MaterialTheme.typography.headlineSmall)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = note.noteContent, style = MaterialTheme.typography.bodySmall)
+        }
     }
 }

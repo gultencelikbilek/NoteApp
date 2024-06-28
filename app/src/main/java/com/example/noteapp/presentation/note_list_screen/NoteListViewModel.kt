@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteapp.domain.model.Note
 import com.example.noteapp.domain.usecase.AllNoteListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,16 +23,18 @@ class NoteListViewModel @Inject constructor(
     private val _noteResponse : MutableState<NoteState> = mutableStateOf(NoteState())
     val noteResponse : State<NoteState> = _noteResponse
 
-    fun getAllNotes(){
+    fun getAllNotes() {
         viewModelScope.launch {
-             allNoteListUseCase.invoke().collect(){
-                    _noteResponse.value.data
-                 Log.d("notelistviewmodel:",_noteResponse.value.data.toString())
+            try {
+                val notes = allNoteListUseCase.invoke()
+                _noteResponse.value = NoteState(data = notes)
+            } catch (e: Exception) {
+                // Hata işlemleri
+                Log.e("NoteListViewModel", "Hata: ${e.message}")
             }
         }
     }
 }
-
 data class NoteState(
-    val data : List<Note> = emptyList(),
+    val data : Flow<List<Note>> = flowOf(emptyList())
 )
